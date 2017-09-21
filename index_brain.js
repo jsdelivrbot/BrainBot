@@ -4,6 +4,28 @@ var MyCoolAgent = require('./MyCoolAgent');
 var message = "text";
 var greenlight = 1;
 
+
+var express = require('express');
+var app     = express();
+
+app.set('port', (process.env.PORT || 5000));
+
+//For avoidong Heroku $PORT error
+app.get('/', function(request, response) {
+    var result = 'App is running'
+    response.send(result);
+}).listen(app.get('port'), function() {
+    console.log('App is running, server is listening on port ', app.get('port'));
+});
+
+
+var https = require('https');
+
+setInterval(function() {
+    https.get("https://BrainBot.herokuapp.com/");
+}, 600000); // every 5 minutes (300000) every 10 minutes (600000)
+
+
 var openConvs = {};
 
 // Set up Conversation service wrapper.
